@@ -1,0 +1,43 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        if a == "0" and b == "0":
+            return "0"
+        elif a == "0":
+            return b
+        elif b == "0":
+            return a
+        else:
+            max_len = len(a)
+            if len(a) >= len(b):
+                b = "0" * (len(a) - len(b)) + b
+            else:
+                max_len = len(b)
+                a = "0" * (len(b) - len(a)) + a
+
+            rev_a = a[::-1]
+            rev_b = b[::-1]
+
+            ans = ""
+            extra = False
+            for i in range(max_len):
+                if rev_a[i] == rev_b[i]:
+                    if rev_a[i] == '0':
+                        if extra: 
+                            ans += "1" 
+                            extra = False
+                        else: 
+                            ans += "0"
+                    else:
+                        if extra:
+                            ans += "1"
+                        else:
+                            ans += "0"
+                            extra = True
+                else:
+                    if extra:
+                        ans += "0"
+                    else:
+                        ans += "1"
+            if extra:
+                ans += "1"
+            return ans[::-1]
