@@ -1,0 +1,32 @@
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        side = True #true - width, false - height
+        dir = True #true - right/down, false - left/up
+        fl = False
+        ans = [[0 for col in range(n)] for row in range(n)] 
+        i = 0
+        j = -1
+        val = 1
+        steps: float = n
+            
+        while (steps >= 1):
+            m = int(steps)
+            step = 1 if dir else -1
+            if side:
+                for k in range(m, 0, -1):
+                    j += step
+                    ans[i][j] = val
+                    val += 1
+            else:
+                for k in range(m, 0, -1):
+                    i += step
+                    ans[i][j] = val
+                    val += 1
+                
+            side = not side
+            if fl:
+                dir = not dir
+            fl = not fl
+            steps -= 0.5
+            
+        return ans
