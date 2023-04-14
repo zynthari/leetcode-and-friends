@@ -1,0 +1,51 @@
+nums = {
+        "1": False,
+        "2": False,
+        "3": False,
+        "4": False,
+        "5": False,
+        "6": False,
+        "7": False,
+        "8": False,
+        "9": False,
+    }
+
+def check_entity(patient):
+    n = len(patient)
+    m = len(patient[0])
+    curr_nums = copy.deepcopy(nums)
+    for i in range(n):
+        for j in range(m):
+            if patient[i][j] in curr_nums:
+                if curr_nums[patient[i][j]]:
+                    return False
+                else:
+                    curr_nums[patient[i][j]] = True
+    return True
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        ans = True
+        i = 0
+        j = 0
+
+        for i in range(len(board)):
+            ans = check_entity(board[i])
+            if not ans:
+                return False
+        
+        for i in range(0, 9, 3):
+            for j in range(0, 9, 3):
+                ans = check_entity([x[i:i+3] for x in board][j:j+3])
+                if not ans:
+                    return False
+        
+        turned_board = list(map(list, zip(*board)))
+        for i in range(len(board)):
+            ans = check_entity(turned_board[i])
+            if not ans:
+                return False
+        
+        return True
+        
