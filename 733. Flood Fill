@@ -1,0 +1,23 @@
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        old_color = image[sr][sc]
+        if old_color == color:
+            return image
+    
+        height = len(image)
+        width = len(image[0])
+
+        def dfs(image, sr, sc):
+            if image[sr][sc] == old_color:
+                image[sr][sc] = color
+                if sr > 0:
+                    image = dfs(image, sr-1, sc)
+                if sc > 0:
+                    image = dfs(image, sr, sc-1)
+                if sr < height - 1:
+                    image = dfs(image, sr+1, sc)
+                if sc < width - 1:
+                    image = dfs(image, sr, sc+1)
+            return image
+    
+        return dfs(image, sr, sc)
